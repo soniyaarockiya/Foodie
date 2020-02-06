@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:foodie_demo/Model/item_model_pojo.dart';
 import 'package:foodie_demo/Sub_widgets/drawer.dart';
 import 'package:foodie_demo/Sub_widgets/gridView_card.dart';
+import 'package:foodie_demo/User_Screens/item_click.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -50,10 +51,25 @@ class _HomeState extends State<Home> {
       //ADD GRID VIEW IN BODY
       body: GridView.builder(
           gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
+            // crossAxisSpacing: 10,
+            // mainAxisSpacing: 10
+          ),
           itemCount: items.length,
           itemBuilder: (BuildContext context, int index) {
-            return GridCard(items[index]);
+            return GestureDetector(
+
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (BuildContext context) =>
+                        ItemClick(itemModel: (items[index]))
+
+                ));
+              },
+              child: GridCard(items[index]),
+
+
+            );
           }),
     );
   }
