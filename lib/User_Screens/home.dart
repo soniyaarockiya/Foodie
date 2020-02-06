@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_demo/Sub_widgets/drawer.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -40,6 +41,9 @@ class _HomeState extends State<Home> {
           )
         ],
       ),
+
+      // Drawer widget added from drawer.dart(Sub_widgets pkg)
+      drawer: DrawerMenu(),
     );
   }
 }
