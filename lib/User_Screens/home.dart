@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foodie_demo/Model/item_model_pojo.dart';
 import 'package:foodie_demo/Sub_widgets/drawer.dart';
+import 'package:foodie_demo/Sub_widgets/gridView_card.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -15,7 +17,7 @@ class _HomeState extends State<Home> {
         //TODO: try adding an icon like spoon instead of text here
         title: Text('Hey Foodie !'),
 
-        //Add favourite and notification icons (use stack fo notifications)
+        //ADD FAV AND NOTIFICATIONS ICON (USE STACK FOR NOTIFY)
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -24,7 +26,7 @@ class _HomeState extends State<Home> {
             onPressed: null,
           ),
           Stack(
-            //alignment is important for notifications icon
+            //ALIGNMENT IS IMPORTANT FOR NOTIFICATION ICON
             alignment: Alignment.centerLeft,
             children: <Widget>[
               IconButton(
@@ -42,8 +44,17 @@ class _HomeState extends State<Home> {
         ],
       ),
 
-      // Drawer widget added from drawer.dart(Sub_widgets pkg)
+      //DRAWER WIDGET ADDED FROM drawer.dart(Sub_widgets pkg)
       drawer: DrawerMenu(),
+
+      //ADD GRID VIEW IN BODY
+      body: GridView.builder(
+          gridDelegate:
+          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+          itemCount: items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GridCard(items[index]);
+          }),
     );
   }
 }
