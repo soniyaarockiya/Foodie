@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_demo/Model/item_model_pojo.dart';
 
+
+//todo: work on the ui
 class ItemClick extends StatefulWidget {
   final ItemModel itemModel;
 
@@ -32,6 +34,32 @@ class _ItemClickState extends State<ItemClick> {
                 Text(('${widget.itemModel.itemPrice}'))
               ],
             ),
+
+            Row(
+              children: <Widget>[
+                FlatButton(
+                  //todo: add to cart
+                  onPressed: () {
+                    print('added to cart');
+                  },
+                  child: Text(
+                      'Add to cart'
+
+                  ),
+
+                ),
+
+                FlatButton(
+                  onPressed: () {
+                    //todo: add to fav list func
+                    print('added to fav');
+                  },
+                  child: Text(
+                      'Add to favourites'
+                  ),
+                )
+              ],
+            )
           ],
         ));
   }
