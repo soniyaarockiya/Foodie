@@ -13,8 +13,6 @@ class DrawerMenu extends StatefulWidget {
 }
 
 class _DrawerMenuState extends State<DrawerMenu> {
-
-
   void logout() async {
     try {
       await widget.auth.signOut();
@@ -41,8 +39,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
                   'Soniya Arockiya'),
               accountEmail: Text(
                 'soniya@gmail.com',
-              )
-          ),
+              )),
 
           //SECOND PART OF DRAWER MENU
           ListTile(
@@ -70,7 +67,7 @@ class _DrawerMenuState extends State<DrawerMenu> {
             ),
             title: Text('Log out'),
             onTap: () {
-              //THIA LINE CLOSES THE DRAWER BEFORE LOGINN OUT(I.E CHANGING THE WIDGET--- other
+              //THIA LINE CLOSES THE DRAWER BEFORE LOGIN OUT(I.E CHANGING THE WIDGET--- other
               // wise it gives this error-->setState() or markNeedsBuild() called when widget tree was locked.)
               Navigator.pop(context);
 
@@ -82,6 +79,4 @@ class _DrawerMenuState extends State<DrawerMenu> {
       ),
     );
   }
-
-
 }

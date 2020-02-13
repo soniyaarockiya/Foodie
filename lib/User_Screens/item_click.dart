@@ -25,13 +25,16 @@ class _ItemClickState extends State<ItemClick> {
         ),
         body: Column(
           children: <Widget>[
-            Image(
-              image: NetworkImage(widget.itemModel.itemImage),
+            Container(
+              child: Image(
+                image: NetworkImage(widget.itemModel.itemImage),
+              ),
+              height: 200.0,
             ),
             Row(
               children: <Widget>[
                 Text(widget.itemModel.itemName),
-                Text(('${widget.itemModel.itemPrice}'))
+                Text(widget.itemModel.itemPrice)
               ],
             ),
 
@@ -43,7 +46,7 @@ class _ItemClickState extends State<ItemClick> {
                     print('added to cart');
                   },
                   child: Text(
-                      'Add to cart'
+                      'Buy Now'
 
                   ),
 

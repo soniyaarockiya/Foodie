@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:foodie_demo/Controller/auth.dart';
 import 'package:foodie_demo/Model/item_model_pojo.dart';
 import 'package:foodie_demo/Sub_widgets/drawer.dart';
-import 'package:foodie_demo/Sub_widgets/gridView_card.dart';
-import 'package:foodie_demo/User_Screens/item_click.dart';
+import 'package:foodie_demo/Sub_widgets/gridView_builder.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+//firestore instance
+final _fireStore = Firestore.instance;
 
 class Home extends StatefulWidget {
   final VoidCallback onSignedOutHome;
   final BaseAuth auth;
-
 
   Home({this.auth, this.onSignedOutHome});
 
@@ -16,11 +18,9 @@ class Home extends StatefulWidget {
   _HomeState createState() => _HomeState();
 }
 
-
 class _HomeState extends State<Home> {
-
   String email;
-
+  List<ItemModel> items = [];
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,6 @@ class _HomeState extends State<Home> {
 
         //ADD FAV AND NOTIFICATIONS ICON (USE STACK FOR NOTIFY)
         actions: <Widget>[
-
           IconButton(
             icon: Icon(
               Icons.favorite,
@@ -65,30 +64,39 @@ class _HomeState extends State<Home> {
           auth: widget.auth,
           signOutSelected: () {
             widget.onSignedOutHome();
-          }
-
-      ),
+          }),
 
       //ADD GRID VIEW IN BODY
-      body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            // crossAxisSpacing: 10,
-            // mainAxisSpacing: 10
-          ),
-          itemCount: items.length,
-          itemBuilder: (BuildContext context, int index) {
-            return GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        ItemClick(itemModel: (items[index]))));
-              },
-              child: GridCard(items[index]),
-            );
+      body: StreamBuilder<QuerySnapshot>(
+          stream: _fireStore.collection('items').snapshots(),
+          builder: (context, snapshot) {
+            //When snapshot has no data
+            if (!snapshot.hasData) {
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.lightBlueAccent,
+                ),
+              );
+            }
+
+            List<ItemModel> itemModel = [];
+
+            final items = snapshot.data.documents;
+            for (var item in items) {
+              final itemName = item.data['name'];
+              final itemPrice = item.data['price'];
+              final itemImage = item.data['image'];
+
+              final itemSingle = ItemModel.items(
+                  itemName: itemName,
+                  itemImage: itemImage,
+                  itemPrice: itemPrice);
+              itemModel.add(itemSingle);
+            }
+
+
+            return GridViewBuild(items: itemModel);
           }),
     );
   }
-
 }
-

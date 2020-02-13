@@ -5,8 +5,6 @@ import 'package:foodie_demo/Model/item_model_pojo.dart';
 class GridCard extends StatelessWidget {
   //FINAL , SINCE ITS STATELESS WIDGET--- INSTANCE OF ITEM MODEL
   final ItemModel itemModel;
-
-  //CONSTRUCTOR
   GridCard(this.itemModel);
 
   @override
