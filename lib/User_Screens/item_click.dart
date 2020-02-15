@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_demo/Model/item_model_pojo.dart';
+import 'package:foodie_demo/User_Screens/place_order.dart';
 
 
-//todo: work on the ui
 class ItemClick extends StatefulWidget {
   final ItemModel itemModel;
 
@@ -24,6 +24,8 @@ class _ItemClickState extends State<ItemClick> {
           ),
         ),
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
               child: Image(
@@ -39,11 +41,15 @@ class _ItemClickState extends State<ItemClick> {
             ),
 
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 FlatButton(
                   //todo: add to cart
                   onPressed: () {
-                    print('added to cart');
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            PlaceOrder(itemModel: widget.itemModel)
+                    ));
                   },
                   child: Text(
                       'Buy Now'

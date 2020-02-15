@@ -1,6 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_demo/Controller/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:foodie_demo/User_Screens/order_history.dart';
+
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+FirebaseUser loggedInUser;
+String emailFinal;
+String userIdFinal;
 
 class DrawerMenu extends StatefulWidget {
   final BaseAuth auth;
@@ -18,7 +25,28 @@ class _DrawerMenuState extends State<DrawerMenu> {
       await widget.auth.signOut();
       widget.signOutSelected();
     } catch (e) {
-      print("Errror while logging out : $e");
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    inputData();
+  }
+
+  Future<String> inputData() async {
+    try {
+      //onAuthstatechanged is important , nothing worked
+      await FirebaseAuth.instance.onAuthStateChanged
+          .firstWhere((user) => user != null)
+          .then((user) {
+        loggedInUser = user;
+        emailFinal = loggedInUser.email.toString();
+        userIdFinal = loggedInUser.uid.toString();
+      });
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -36,13 +64,17 @@ class _DrawerMenuState extends State<DrawerMenu> {
               ),
               accountName: Text(
                 //dummy data
-                  'Soniya Arockiya'),
+                  userIdFinal),
               accountEmail: Text(
-                'soniya@gmail.com',
+                emailFinal,
               )),
 
           //SECOND PART OF DRAWER MENU
           ListTile(
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (BuildContext context) => OrderHistoryScreen()));
+            },
             leading: CircleAvatar(
               child: Icon(Icons.history),
             ),

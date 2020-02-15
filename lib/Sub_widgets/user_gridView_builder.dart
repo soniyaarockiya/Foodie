@@ -1,21 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:foodie_demo/Model/item_model_pojo.dart';
-import 'package:foodie_demo/Sub_widgets/gridView_card.dart';
-import 'package:foodie_demo/User_Screens/item_click.dart';
+import 'package:foodie_demo/Sub_widgets/user_gridView_card.dart';
+import 'package:foodie_demo/Sub_widgets/user_itemClick.dart';
 
-class GridViewBuild extends StatefulWidget {
+class UserGridViewBuild extends StatefulWidget {
   final List<ItemModel> items;
 
-//  final BaseAuth auth;
-
-  GridViewBuild({this.items});
+  UserGridViewBuild({this.items});
 
   @override
-  _GridViewBuildState createState() => _GridViewBuildState();
+  _UserGridViewBuildState createState() => _UserGridViewBuildState();
 }
 
-
-class _GridViewBuildState extends State<GridViewBuild> {
+class _UserGridViewBuildState extends State<UserGridViewBuild> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
@@ -29,11 +26,11 @@ class _GridViewBuildState extends State<GridViewBuild> {
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (BuildContext context) =>
-                      ItemClick(itemModel: (widget.items[index]))));
+                      UserItemClick(itemModel: (widget.items[index]))));
             },
 
             //Grid View is made of gridCard (tiles)
-            child: GridCard(itemModel: widget.items[index]),
+            child: UserGridCard(itemModel: widget.items[index]),
           );
         });
   }

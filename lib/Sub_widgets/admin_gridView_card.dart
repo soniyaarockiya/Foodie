@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodie_demo/Model/item_model_pojo.dart';
 
-class GridCard extends StatelessWidget {
-  //FINAL , SINCE ITS STATELESS WIDGET--- INSTANCE OF ITEM MODEL
+class AdminGridCard extends StatelessWidget {
   final ItemModel itemModel;
 
-  GridCard({this.itemModel});
+  AdminGridCard({this.itemModel});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +18,6 @@ class GridCard extends StatelessWidget {
           children: <Widget>[
             // IMAGE --FIRST CARD COMPONENT
             Container(
-              //todo : fix this image height, to avoid overflow and remove hardcoded height value
               child: Image.network(
                 itemModel.itemImage,
                 //fit: BoxFit.fitHeight,
@@ -38,9 +36,12 @@ class GridCard extends StatelessWidget {
                 Text(
                   itemModel.itemPrice,
                 ),
-
               ],
             ),
+
+            Text(itemModel.address),
+
+            Text(itemModel.itemStatus)
 
             //TEXT--ITEM NAME --- SECOND CARD COMPONENT
           ],

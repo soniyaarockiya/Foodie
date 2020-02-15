@@ -5,7 +5,6 @@ import 'package:foodie_demo/Sub_widgets/drawer.dart';
 import 'package:foodie_demo/Sub_widgets/gridView_builder.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//firestore instance
 final _fireStore = Firestore.instance;
 
 class Home extends StatefulWidget {
@@ -27,10 +26,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        //TODO: try adding an icon like spoon instead of text here
-        title: Icon(
-          Icons.star,
-        ),
+        title: Text('Home Page'),
 
         //ADD FAV AND NOTIFICATIONS ICON (USE STACK FOR NOTIFY)
         actions: <Widget>[
@@ -93,7 +89,6 @@ class _HomeState extends State<Home> {
                   itemPrice: itemPrice);
               itemModel.add(itemSingle);
             }
-
 
             return GridViewBuild(items: itemModel);
           }),

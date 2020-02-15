@@ -24,7 +24,6 @@ class _RootPageState extends State<RootPage> {
   // HERE FIRST AND ACCORDINGLY DISPLAY THE RELEVANT SCREEN
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     //ROOT PAGE CHECKS IF USER IS LOGGED IN OR NOT AND ACCORDINGLY CHANGES THE AUTH STATUS VAR ,
     // THEN THE BUILD METHOD IS CALLED

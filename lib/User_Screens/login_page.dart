@@ -2,8 +2,8 @@
 // assign current state of form_key to a form variable , check for validation.
 
 import 'package:flutter/material.dart';
-import 'package:foodie_demo/Admin_Screens/admin_page.dart';
 import 'package:foodie_demo/Controller/auth.dart';
+import 'package:foodie_demo/Admin_Screens/liveOrders.dart';
 
 class LoginPage extends StatefulWidget {
   final BaseAuth auth;
@@ -96,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => AdminPage(),
+                  builder: (context) => LiveOrders(),
                 ));
           },
           child: Text(

@@ -6,16 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 String price;
 String itemName;
 String _uploadImageUrl;
 File sampleImage;
-
-//Firestore db = Firestore.instance;
-//StorageReference storageReference;
-//
-//CollectionReference collectionReference = db.collection("Journal");
 
 class AdminPage extends StatefulWidget {
   @override
@@ -33,7 +27,6 @@ class _AdminPageState extends State<AdminPage> {
       setState(() {
         sampleImage = img;
       });
-      print("sample image got : $sampleImage");
     } catch (e) {
       print('Error: $e');
     }
@@ -41,6 +34,7 @@ class _AdminPageState extends State<AdminPage> {
 
   Future upload() async {
     try {
+      //add image to storage
       StorageReference filepath = FirebaseStorage.instance
           .ref()
           .child("item_images")
@@ -49,43 +43,21 @@ class _AdminPageState extends State<AdminPage> {
       StorageUploadTask uploadTask = filepath.putFile(sampleImage);
       await uploadTask.onComplete;
       print("Image uploaded ");
-      //todo: add a toast or something to show successfull upload
-      //todo: onsuccess, onfailure, on complete actions can also be added
 
+      //get image storage link to save it in the collection
       await filepath.getDownloadURL().then((fileUrl) async {
         setState(() {
           _uploadImageUrl = fileUrl;
-          print("upload url got at : $_uploadImageUrl");
         });
       });
 
-
+      //upload the item to db
       try {
-        print("${itemNameController.text}");
-        print("${itemPriceController.text}");
-
-        await Firestore.instance.collection("items").document().setData(
-            {'name': itemNameController.text,
-              'price': itemPriceController.text,
-              'image': _uploadImageUrl});
-
-        //ItemModel itemModel = new ItemModel();
-//        var itemModel = ItemModel.items();
-
-//       DocumentReference df =  collectionReference.document();
-//
-//
-//       await df.setData({
-//
-//       'itemName':itemNameController.text,
-//         'itemPrice': itemPriceController.text       });
-
-
-//          collectionReference.document().setData({
-//          'itemName':itemNameController.text,
-//          'itemPrice': itemPriceController.text
-//          //'itemImage': _uploadImageUrl
-//        });
+        await Firestore.instance.collection("items").document().setData({
+          'name': itemNameController.text,
+          'price': itemPriceController.text,
+          'image': _uploadImageUrl
+        });
 
         print(("Added to db succesffully"));
       } catch (e) {
@@ -100,6 +72,13 @@ class _AdminPageState extends State<AdminPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+            sampleImage = null;
+          },
+        ),
         title: Text('Hey Admin'),
       ),
       body: Builder(
@@ -129,14 +108,11 @@ class _AdminPageState extends State<AdminPage> {
                         )),
                     TextFormField(
                       controller: itemNameController,
-                      //onSaved: (value) => itemName.toString(),
                       decoration:
                       InputDecoration(labelText: "Enter the name of the item"),
                     ),
                     TextFormField(
-                      //keyboardType: TextInputType.number,
                       controller: itemPriceController,
-                      //onSaved: (value) => price.toString(),
                       decoration: InputDecoration(
                         labelText: "Enter the item price",
                       ),
@@ -144,7 +120,7 @@ class _AdminPageState extends State<AdminPage> {
                     RaisedButton(
                       onPressed: upload,
                       child: Text('Upload to database'),
-                    )
+                    ),
                   ],
                 ),
               ),
